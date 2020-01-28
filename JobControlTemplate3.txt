@@ -1,0 +1,28 @@
+Name
+MergerMator Control File
+Version:
+22:47 28/01/2020
+Timestamp
+???
+SubAssetName
+???
+InputList
+E57List.txt
+InputType
+.E57
+InputPath
+C:\Users\Desktop\Documents\Work\Scans\
+OutputPath
+.\Out\
+OutputType
+.3dk
+LogPath
+.\log\
+BboxXmlPath
+.\
+SettingsXmlPath
+.\
+SeedPoints
+0
+Items
+28

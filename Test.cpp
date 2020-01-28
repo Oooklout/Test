@@ -1,22 +1,82 @@
+#pragma once
 // Test.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include "Fileutils.h"
 
-int main()
+void run(int argc, char** argv)
 {
-    std::cout << "Hello World!\n";
+	if (argc < 2)
+	{
+		std::cout << "Not enough Arguments" << std::endl;
+		std::cout << "Usage: JobFilePathName" << std::endl;
+		return;
+	}
 
+	const std::string JobFilePath = argv[1];
+	std::cout << JobFilePath << std::endl;
+	
+	std::cout << exeDate << std::endl; // announce compiled-at-NOW-timestamp
 
+	// Note: even item numbers are keys; odd nos are values
+	std::vector<std::string> vecOfStr;
+	size_t total = getFileContent(JobFilePath, vecOfStr);
+	if (total != 0)
+	{
+		// PrettyPrint the vector contents as key:value pairs for fun
+		std::cout << std::endl << "List of Items, paired " << std::endl;
+
+		bool evenItem = false;
+		for (std::string& word : vecOfStr)
+		{
+			std::cout << word;
+			if (evenItem)
+			{
+				std::cout << std::endl;
+			}else{
+				std::cout << " : ";
+			}
+			evenItem = !evenItem;
+		}
+		if ((total % 2) == 1)   // shouldn't get an odd number of items
+		{
+			std::cout << std::endl;
+			throw std::runtime_error("CtrlFile: Odd no of items");
+		}
+		if (std::stoi(vecOfStr.back()) != total)	// last in list is item_count
+		{
+			throw std::runtime_error("CtrlFileLoad: Incorrect Item count");
+		}else{
+			std::cout << "All items received" << std::endl;
+		}
+	}else{
+		return;
+	}
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main(int argc, char** argv)
+{
+#if defined( WIN32 ) && defined( _DEBUG )
+	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
+	// _CrtSetBreakAlloc( 0 );
+#endif
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+	try
+	{
+		run(argc, argv);
+		return EXIT_SUCCESS;
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
+	catch (...)
+	{
+		std::cerr << "unknown error" << std::endl;
+		return EXIT_FAILURE;
+	}
+}
