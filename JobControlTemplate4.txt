@@ -1,7 +1,7 @@
 Name
-MergerMator Control File
+MesherMator Control File
 Version:
-22:47 28/01/2020
+19:10 29/01/2020
 Timestamp
 ???
 SubAssetName
@@ -13,16 +13,18 @@ InputType
 InputPath
 C:\Users\Desktop\Documents\Work\Scans\
 OutputPath
-.\Out\
+..\Out\
 OutputType
 .3dk
 LogPath
-.\log\
+..out\log\
 BboxXmlPath
 .\
 SettingsXmlPath
 .\
 SeedPoints
 0
+SaveSettings
+Y
 Items
-28
+30

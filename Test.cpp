@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include "Fileutils.h"
+#include "CtlDefs.h"
+
 
 void run(int argc, char** argv)
 {
@@ -19,9 +21,9 @@ void run(int argc, char** argv)
 	const std::string JobFilePath = argv[1];
 	std::cout << JobFilePath << std::endl;
 	
-	std::cout << exeDate << std::endl; // announce compiled-at-NOW-timestamp
+	std::cout << "Timestamp: "<< exeDate << std::endl; // test announce compiled-at-NOW-timestamp
 
-	// Note: even item numbers are keys; odd nos are values
+	// Note: Zero-based: even item numbers are keys; odd nos are values
 	std::vector<std::string> vecOfStr;
 	size_t total = getFileContent(JobFilePath, vecOfStr);
 	if (total != 0)
@@ -55,6 +57,39 @@ void run(int argc, char** argv)
 	}else{
 		return;
 	}
+
+// illustrate DEFINEs indexing job control file vector
+	// Tested same as Template4 verbatim OK
+	std::cout << vecOfStr[(NAME-1)] << std::endl;	//	
+	std::cout << vecOfStr[NAME] << std::endl;	//
+	std::cout << vecOfStr[VERSION-1] << std::endl;	// 3
+	std::cout << vecOfStr[VERSION] << std::endl;	// 3
+	std::cout << vecOfStr[TIMESTAMP-1] << std::endl;	// 5
+	std::cout << vecOfStr[TIMESTAMP] << std::endl;	// 5
+	std::cout << vecOfStr[JOBNAME-1] << std::endl;	// 7
+	std::cout << vecOfStr[JOBNAME] << std::endl;	// 7
+	std::cout << vecOfStr[INPUTLIST-1] << std::endl;	// 9
+	std::cout << vecOfStr[INPUTLIST] << std::endl;	// 9
+	std::cout << vecOfStr[INPUTTYPE-1] << std::endl;	// 11
+	std::cout << vecOfStr[INPUTTYPE] << std::endl;	// 11
+	std::cout << vecOfStr[INPUTPATH-1] << std::endl;	// 
+	std::cout << vecOfStr[INPUTPATH] << std::endl;	// 13
+	std::cout << vecOfStr[OUTPUTPATH-1] << std::endl;	// 
+	std::cout << vecOfStr[OUTPUTPATH] << std::endl;	// 15
+	std::cout << vecOfStr[OUTPUTTYPE-1] << std::endl;	// 
+	std::cout << vecOfStr[OUTPUTTYPE] << std::endl;	// 17
+	std::cout << vecOfStr[LOGPATH-1] << std::endl;	// 
+	std::cout << vecOfStr[LOGPATH] << std::endl;	// 19
+	std::cout << vecOfStr[BBOXXMLPATH-1] << std::endl;	// 
+	std::cout << vecOfStr[BBOXXMLPATH] << std::endl;	// 21
+	std::cout << vecOfStr[SETTINGSXMLPATH-1] << std::endl;	// 
+	std::cout << vecOfStr[SETTINGSXMLPATH] << std::endl;	// 23
+	std::cout << vecOfStr[SEEDPOINTS-1] << std::endl;	//
+	std::cout << vecOfStr[SEEDPOINTS] << std::endl;	// 25
+	std::cout << vecOfStr[SAVESETTINGS-1] << std::endl;
+	std::cout << vecOfStr[SAVESETTINGS] << std::endl;	// 27
+	std::cout << vecOfStr[ITEMS-1] << std::endl;	// 
+	std::cout << vecOfStr[ITEMS] << std::endl;	// 29
 }
 
 int main(int argc, char** argv)

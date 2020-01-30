@@ -26,5 +26,8 @@
     <ClInclude Include="Fileutils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="CtlDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
