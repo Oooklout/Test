@@ -5,7 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
 #include "Fileutils.h"
+#include "CtrlFileDefs.h"
 
 void run(int argc, char** argv)
 {
@@ -16,21 +18,34 @@ void run(int argc, char** argv)
 		return;
 	}
 
-	const std::string JobFilePath = argv[1];
+/*
+We get the VecOfStr loaded with the key:value pairs. 
+We only want the even-numbered items. 
+These offsets are used as indexes: vec[NAME] returns the Value string. 
+std::string InputList = vecOfStr[INPUTLIST];
+*/
+
+
+
+	std::string JobFilePath = argv[1];
+	std::vector<std::string> Ctl;
+	size_t total = getFileContent(JobFilePath, Ctl);
+	if (std::stoi(Ctl[ITEMS]) != total) { return; }
+	
 	std::cout << JobFilePath << std::endl;
 	
 	std::cout << exeDate << std::endl; // announce compiled-at-NOW-timestamp
 
-	// Note: even item numbers are keys; odd nos are values
+	// Note: even-numbered items are keys; odd nos are values
 	std::vector<std::string> vecOfStr;
-	size_t total = getFileContent(JobFilePath, vecOfStr);
+	total = getFileContent(Ctl[INPUTLIST], vecOfStr);
 	if (total != 0)
 	{
 		// PrettyPrint the vector contents as key:value pairs for fun
 		std::cout << std::endl << "List of Items, paired " << std::endl;
 
 		bool evenItem = false;
-		for (std::string& word : vecOfStr)
+		for (auto word : vecOfStr)
 		{
 			std::cout << word;
 			if (evenItem)
